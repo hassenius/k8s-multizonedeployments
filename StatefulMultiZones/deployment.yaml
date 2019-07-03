@@ -52,6 +52,16 @@ spec:
         volumeMounts:
         - name: www
           mountPath: /usr/share/nginx/html
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - nginx
+            topologyKey: failure-domain.beta.kubernetes.io/zone
   volumeClaimTemplates:
   - metadata:
       name: www
